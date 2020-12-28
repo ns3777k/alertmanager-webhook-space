@@ -16,3 +16,4 @@ dockers:
     goarch: amd64
     image_templates:
       - "ns3777k/alertmanager-webhook-space:{{ .Tag }}"
+      - "ns3777k/alertmanager-webhook-space:latest"

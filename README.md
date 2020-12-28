@@ -8,6 +8,31 @@ Before you begin, you need multiple things to have:
 2. Channel to send alerts
 3. Application with `Enable client credentials flow` on (`Administration` -> `Applications`).
 
+## Usage
+
+```shell
+usage: alertmanager-webhook-space \
+		--space-channel-id=SPACE-CHANNEL-ID \
+		--space-base-url=SPACE-BASE-URL \
+		--space-client-id=SPACE-CLIENT-ID \
+		--space-client-secret=SPACE-CLIENT-SECRET \
+		[<flags>]
+
+alertmanager-webhook-space
+
+Flags:
+  -h, --help                   Show context-sensitive help (also try --help-long and --help-man).
+  -l, --listen="0.0.0.0:9091"  Address to listen on
+      --space-channel-id=SPACE-CHANNEL-ID
+                               Channel id
+      --space-base-url=SPACE-BASE-URL
+                               Base url like https://mycompany.jetbrains.space
+      --space-client-id=SPACE-CLIENT-ID
+                               Application client id
+      --space-client-secret=SPACE-CLIENT-SECRET
+                               Application client secret
+```
+
 ## Building from source
 
 ```shell
@@ -15,6 +40,12 @@ $ CGO_ENABLED=0 go build -o alertmanager-webhook-jetbrains-space ./cmd/alertmana
 ```
 
 ## Running docker
+
+```shell
+$ docker run --rm -it ns3777k/alertmanager-webhook-space
+```
+
+But you're better off using a specific tag.
 
 ## Running without docker
 
