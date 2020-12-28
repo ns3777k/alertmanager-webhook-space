@@ -1,0 +1,21 @@
+project_name: alertmanager-webhook-space
+
+build:
+  main: ./cmd/alertmanager-webhook-space/main.go
+  goos:
+    - darwin
+    - linux
+    - windows
+  goarch:
+    - amd64
+  env:
+    - CGO_ENABLED=0
+
+release:
+  disable: true
+
+dockers:
+  - goos: linux
+    goarch: amd64
+    image_templates:
+      - "ns3777k/alertmanager-webhook-space:{{ .Tag }}"
