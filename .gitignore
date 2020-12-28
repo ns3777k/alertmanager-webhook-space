@@ -1,3 +1,4 @@
 /bin
 .idea
 /alertmanager-webhook-jetbrains-space
+/dist
