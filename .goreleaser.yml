@@ -11,9 +11,6 @@ build:
   env:
     - CGO_ENABLED=0
 
-release:
-  disable: true
-
 dockers:
   - goos: linux
     goarch: amd64
