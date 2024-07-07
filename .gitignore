@@ -2,3 +2,4 @@
 .idea
 /alertmanager-webhook-jetbrains-space
 /dist
+.DS_Store

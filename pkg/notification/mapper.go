@@ -21,8 +21,8 @@ func MapAlertToMessage(alert *alertmanager.Alert, channelID string) *space.Messa
 	}
 
 	return &space.Message{
-		Recipient: &space.MessageRecipient{
-			ClassName: "MessageRecipient.Channel",
+		Channel: &space.ChannelIdentifier{
+			ClassName: "ChannelIdentifier.Channel",
 			Channel: &space.MessageChannel{
 				ClassName: "ChatChannel.FromId",
 				ID:        channelID,

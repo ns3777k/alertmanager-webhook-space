@@ -14,8 +14,8 @@ Before you begin, you need multiple things to have:
 usage: alertmanager-webhook-space \
 		--space-channel-id=SPACE-CHANNEL-ID \
 		--space-base-url=SPACE-BASE-URL \
-		--space-client-id=SPACE-CLIENT-ID \
-		--space-client-secret=SPACE-CLIENT-SECRET \
+		--space-token=APP_TOKEN \
+		--debug \
 		[<flags>]
 
 alertmanager-webhook-space
@@ -27,10 +27,10 @@ Flags:
                                Channel id
       --space-base-url=SPACE-BASE-URL
                                Base url like https://mycompany.jetbrains.space
-      --space-client-id=SPACE-CLIENT-ID
-                               Application client id
-      --space-client-secret=SPACE-CLIENT-SECRET
-                               Application client secret
+      --space-token=APP_TOKEN
+                               Application token
+      --debug
+                               Debug logs
 ```
 
 ## Building from source

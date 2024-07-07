@@ -5,11 +5,6 @@ type MessageChannel struct {
 	ID        string `json:"id"`
 }
 
-type MessageRecipient struct {
-	ClassName string          `json:"className"`
-	Channel   *MessageChannel `json:"channel"`
-}
-
 type MessageContentSectionElement struct {
 	ClassName string `json:"className"`
 	Content   string `json:"content"`
@@ -28,7 +23,12 @@ type MessageContent struct {
 	Sections  []*MessageContentSection `json:"sections"`
 }
 
+type ChannelIdentifier struct {
+	ClassName string          `json:"className"`
+	Channel   *MessageChannel `json:"channel"`
+}
+
 type Message struct {
-	Recipient *MessageRecipient `json:"recipient"`
-	Content   *MessageContent   `json:"content"`
+	Channel *ChannelIdentifier `json:"channel"`
+	Content *MessageContent    `json:"content"`
 }

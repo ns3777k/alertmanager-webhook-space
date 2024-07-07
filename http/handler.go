@@ -3,8 +3,8 @@ package http
 import (
 	"context"
 	"encoding/json"
+	"github.com/sirupsen/logrus"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"time"
 
@@ -14,26 +14,21 @@ import (
 	"github.com/ns3777k/alertmanager-webhook-space/pkg/space"
 )
 
-func unmarshalReader(r io.Reader, v interface{}) error {
-	b, err := ioutil.ReadAll(r)
-	if err != nil {
-		return err
-	}
-
-	return json.Unmarshal(b, &v)
-}
-
 type Handler struct {
 	channelID   string
+	debug       bool
+	logger      *logrus.Logger
 	spaceClient *space.Client
 	Router      *mux.Router
 }
 
-func NewHandler(spaceClient *space.Client, channelID string) *Handler {
+func NewHandler(spaceClient *space.Client, logger *logrus.Logger, channelID string, debug bool) *Handler {
 	h := &Handler{
 		spaceClient: spaceClient,
 		channelID:   channelID,
 		Router:      mux.NewRouter(),
+		debug:       debug,
+		logger:      logger,
 	}
 
 	h.Router.HandleFunc("/healthcheck", h.Healthcheck)
@@ -49,7 +44,17 @@ func (h *Handler) Healthcheck(w http.ResponseWriter, r *http.Request) {
 func (h *Handler) Notify(w http.ResponseWriter, r *http.Request) {
 	var payload alertmanager.WebHookPayload
 
-	if err := unmarshalReader(r.Body, &payload); err != nil {
+	b, err := io.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	if h.debug {
+		h.logger.Info(string(b))
+	}
+
+	if err := json.Unmarshal(b, &payload); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}

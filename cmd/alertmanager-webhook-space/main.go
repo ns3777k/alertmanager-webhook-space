@@ -26,6 +26,7 @@ func makeSignalShutdownChan() chan os.Signal {
 }
 
 type Configuration struct {
+	Debug      bool
 	ListenAddr string
 	ChannelID  string
 }
@@ -58,15 +59,15 @@ func main() {
 		Required().
 		StringVar(&spaceClientSettings.BaseURL)
 
-	app.Flag("space-client-id", "Application client id").
-		Envar("CLIENT_ID").
+	app.Flag("space-token", "Application token").
+		Envar("APP_TOKEN").
 		Required().
-		StringVar(&spaceClientSettings.ClientID)
+		StringVar(&spaceClientSettings.ApplicationToken)
 
-	app.Flag("space-client-secret", "Application client secret").
-		Envar("CLIENT_SECRET").
-		Required().
-		StringVar(&spaceClientSettings.ClientSecret)
+	app.Flag("debug", "Debug logs").
+		Envar("DEBUG").
+		Default("false").
+		BoolVar(&configuration.Debug)
 
 	if _, err := app.Parse(os.Args[1:]); err != nil {
 		app.Usage(os.Args[1:])
@@ -75,7 +76,7 @@ func main() {
 
 	shutdownCh := make(chan struct{})
 	spaceClient := space.NewClient(spaceClientSettings)
-	h := alertHttp.NewHandler(spaceClient, configuration.ChannelID)
+	h := alertHttp.NewHandler(spaceClient, logger, configuration.ChannelID, configuration.Debug)
 	server := &http.Server{
 		ReadTimeout:       time.Second * 5,
 		WriteTimeout:      time.Second * 5,
