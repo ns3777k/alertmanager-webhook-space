@@ -1,5 +1,7 @@
 project_name: alertmanager-webhook-space
 
+version: 2
+
 build:
   main: ./cmd/alertmanager-webhook-space/main.go
   goos:
